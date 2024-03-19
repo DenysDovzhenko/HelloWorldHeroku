@@ -1,4 +1,4 @@
-FROM node:21.6.2-1
+FROM node:alpine
 RUN npm install express
 COPY hello.js .
 CMD node hello.js

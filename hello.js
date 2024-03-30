@@ -10,7 +10,7 @@ const certificate = '/ssl/cert.pem'
 const ca = '/ssl/chain.pem'
 const ssl = false
 
-if (fs.existsSync('/ssl/privkey.pem') && fs.existsSync('/ssl/chain.pem') && fs.existsSync('/ssl/cart')) {
+if (fs.existsSync(privateKey) && fs.existsSync(certificate) && fs.existsSync(ca)) {
     const credentials = {
         key: fs.readFileSync(privateKey),
         cert: fs.readFileSync(certificate),

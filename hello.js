@@ -7,10 +7,11 @@ const app = express();
 
 const privateKey = '/ssl/privkey1.pem'
 const certificate = '/ssl/fullchain1.pem'
-const ssl = false
+let ssl = false
+let credentials
 
 if (fs.existsSync(privateKey) && fs.existsSync(certificate)) {
-    const credentials = {
+    credentials = {
         key: fs.readFileSync(privateKey),
         cert: fs.readFileSync(certificate)
     };
@@ -32,7 +33,7 @@ if (ssl) {
 else {
     const httpServer = http.createServer(app);
 
-    httpServer.listen(80, () => {
+    httpServer.listen(process.env.PORT, () => {
         console.log('HTTP Server running on port 80');
     });
 }

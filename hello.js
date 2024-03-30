@@ -6,15 +6,13 @@ const express = require('express');
 const app = express();
 
 const privateKey = '/ssl/privkey.pem'
-const certificate = '/ssl/cert.pem'
-const ca = '/ssl/chain.pem'
+const certificate = '/ssl/fullchain.pem'
 const ssl = false
 
-if (fs.existsSync(privateKey) && fs.existsSync(certificate) && fs.existsSync(ca)) {
+if (fs.existsSync(privateKey) && fs.existsSync(certificate)) {
     const credentials = {
         key: fs.readFileSync(privateKey),
-        cert: fs.readFileSync(certificate),
-        ca: fs.readFileSync(ca)
+        cert: fs.readFileSync(certificate)
     };
 
     ssl = true

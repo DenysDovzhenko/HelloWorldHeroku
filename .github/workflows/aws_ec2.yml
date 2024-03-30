@@ -30,7 +30,7 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/denys-hello-app:latest
             sudo docker stop my-node-app || true
             sudo docker rm my-node-app || true
-            sudo docker run -d -p 80:80 --name my-node-app ${{ secrets.DOCKER_USERNAME }}/denys-hello-app:latest
+            sudo docker run -d -p 80:80 -p 443:443 --name my-node-app ${{ secrets.DOCKER_USERNAME }}/denys-hello-app:latest
 
 
 

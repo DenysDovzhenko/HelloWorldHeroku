@@ -5,8 +5,8 @@ const express = require('express');
 
 const app = express();
 
-const privateKey = '/ssl/privkey.pem'
-const certificate = '/ssl/fullchain.pem'
+const privateKey = '/ssl/privkey1.pem'
+const certificate = '/ssl/fullchain1.pem'
 const ssl = false
 
 if (fs.existsSync(privateKey) && fs.existsSync(certificate)) {

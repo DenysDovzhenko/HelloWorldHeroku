@@ -30,4 +30,4 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/denys-hello-app:latest
             sudo docker stop my-node-app || true
             sudo docker rm my-node-app || true
-            sudo docker run -d -v /etc/letsencrypt/live/denjia74.duckdns.org-0002:/ssl -p 80:80 -p 443:443 --name my-node-app ${{ secrets.DOCKER_USERNAME }}/denys-hello-app:latest
+            sudo docker run -d -v ${{ secrets.SSL_CERT_PATH }}:/ssl -p 80:80 -p 443:443 --name my-node-app ${{ secrets.DOCKER_USERNAME }}/denys-hello-app:latest

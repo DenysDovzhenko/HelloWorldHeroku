@@ -10,7 +10,6 @@ const certificate = '/ssl/cert.pem'
 const ca = '/ssl/chain.pem'
 const ssl = false
 
-
 if (fs.existsSync('/ssl/privkey.pem') && fs.existsSync('/ssl/chain.pem') && fs.existsSync('/ssl/cart')) {
     const credentials = {
         key: fs.readFileSync(privateKey),
@@ -21,20 +20,21 @@ if (fs.existsSync('/ssl/privkey.pem') && fs.existsSync('/ssl/chain.pem') && fs.e
     ssl = true
 }
 
-
 app.use((req, res) => {
     res.send('Hello there !');
 });
 
-const httpServer = http.createServer(app);
-httpServer.listen(80, () => {
-    console.log('HTTP Server running on port 80');
-});
-
 if (ssl) {
-
     const httpsServer = https.createServer(credentials, app);
+
     httpsServer.listen(443, () => {
         console.log('HTTPS Server running on port 443');
+    });
+}
+else {
+    const httpServer = http.createServer(app);
+
+    httpServer.listen(80, () => {
+        console.log('HTTP Server running on port 80');
     });
 }

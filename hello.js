@@ -10,8 +10,8 @@ if (fs.existsSync(key) && fs.existsSync(cert)) {
     var https = require('https');
 
     var options = {
-        key: fs.readFileSync('/etc/letsencrypt/live/denjia74.duckdns.org/privkey.pem'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/denjia74.duckdns.org/fullchain.pem'),
+        key: fs.readFileSync(key),
+        cert: fs.readFileSync(cert),
     }
 
     https.createServer(options, app).listen(process.env.PORT, function () {

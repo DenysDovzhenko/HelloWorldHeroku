@@ -14,7 +14,7 @@ if (fs.existsSync(key) && fs.existsSync(cert)) {
         cert: fs.readFileSync(cert),
     }
 
-    https.createServer(options, app).listen(process.env.PORT, function () {
+    https.createServer(options, app).listen(443, function () {
         console.log('App is listening on port ' + process.env.PORT);
     });
 }

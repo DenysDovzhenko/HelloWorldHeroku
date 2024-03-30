@@ -5,27 +5,36 @@ const express = require('express');
 
 const app = express();
 
-const privateKey = fs.readFileSync('/ssl/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/ssl/cert.pem', 'utf8');
-const ca = fs.readFileSync('/ssl/chain.pem', 'utf8');
+const privateKey = '/ssl/privkey.pem'
+const certificate = '/ssl/cert.pem'
+const ca = '/ssl/chain.pem'
+const ssl = false
 
-const credentials = {
-	key: privateKey,
-	cert: certificate,
-	ca: ca
-};
+
+if (fs.existsSync('/ssl/privkey.pem') && fs.existsSync('/ssl/chain.pem') && fs.existsSync('/ssl/cart')) {
+    const credentials = {
+        key: fs.readFileSync(privateKey),
+        cert: fs.readFileSync(certificate),
+        ca: fs.readFileSync(ca)
+    };
+
+    ssl = true
+}
+
 
 app.use((req, res) => {
-	res.send('Hello there !');
+    res.send('Hello there !');
 });
 
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
-
 httpServer.listen(80, () => {
-	console.log('HTTP Server running on port 80');
+    console.log('HTTP Server running on port 80');
 });
 
-httpsServer.listen(443, () => {
-	console.log('HTTPS Server running on port 443');
-});
+if (ssl) {
+
+    const httpsServer = https.createServer(credentials, app);
+    httpsServer.listen(443, () => {
+        console.log('HTTPS Server running on port 443');
+    });
+}

@@ -1,30 +1,31 @@
-var express = require('express');
-var http = require('http');
-var fs = require('fs');
-var app = express();
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
+const express = require('express');
 
-const key = fs.readFileSync('/ssl/privkey.pem')
-const cert = fs.readFileSync('/ssl/fullchain.pem')
-const ca = fs.readFileSync('/ssl/chain.pem')
+const app = express();
 
-app.get('/', function (req, res) {
-    res.send('Hello World! Hello to everybody! We are going to post here new content soon!'); 
+const privateKey = fs.readFileSync('/ssl/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/ssl/cert.pem', 'utf8');
+const ca = fs.readFileSync('/ssl/chain.pem', 'utf8');
+
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
+
+app.use((req, res) => {
+	res.send('Hello there !');
 });
 
-if (fs.existsSync(key) && fs.existsSync(cert)) {
-    var https = require('https');
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
 
-    var options = {
-        key: key,
-        cert: cert,
-        ca: ca
-    }
+httpServer.listen(80, () => {
+	console.log('HTTP Server running on port 80');
+});
 
-    https.createServer(options, app).listen(443, function () {
-        console.log('App is listening on port ' + process.env.PORT);
-    });
-}
-
-http.createServer(app).listen(process.env.PORT, function () {
-    console.log('App is listening on port ' + process.env.PORT);
+httpsServer.listen(443, () => {
+	console.log('HTTPS Server running on port 443');
 });

@@ -3,8 +3,8 @@ var http = require('http');
 var fs = require('fs');
 var app = express();
 
-const key = '/etc/letsencrypt/live/denjia74.duckdns.org/privkey.pem'
-const cert = '/etc/letsencrypt/live/denjia74.duckdns.org/fullchain.pem'
+const key = '/ssl/privkey.pem'
+const cert = '/ssl/fullchain.pem'
 
 if (fs.existsSync(key) && fs.existsSync(cert)) {
     var https = require('https');

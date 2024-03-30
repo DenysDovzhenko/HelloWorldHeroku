@@ -3,8 +3,9 @@ var http = require('http');
 var fs = require('fs');
 var app = express();
 
-const key = '/ssl/privkey.pem'
-const cert = '/ssl/fullchain.pem'
+const key = fs.readFileSync('/ssl/privkey.pem')
+const cert = fs.readFileSync('/ssl/fullchain.pem')
+const ca = fs.readFileSync('/ssl/chain.pem')
 
 app.get('/', function (req, res) {
     res.send('Hello World! Hello to everybody! We are going to post here new content soon!'); 
@@ -14,8 +15,9 @@ if (fs.existsSync(key) && fs.existsSync(cert)) {
     var https = require('https');
 
     var options = {
-        key: fs.readFileSync(key),
-        cert: fs.readFileSync(cert),
+        key: key,
+        cert: cert,
+        ca: ca
     }
 
     https.createServer(options, app).listen(443, function () {

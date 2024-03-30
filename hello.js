@@ -20,7 +20,7 @@ if (fs.existsSync(privateKey) && fs.existsSync(certificate)) {
 }
 
 app.use((req, res) => {
-    res.send('Hello there !');
+    res.send('Hello there ! Adding new content.');
 });
 
 if (ssl) {
@@ -34,6 +34,6 @@ else {
     const httpServer = http.createServer(app);
 
     httpServer.listen(process.env.PORT, () => {
-        console.log('HTTP Server running on port 80');
+        console.log('HTTP Server running on port ' + process.env.PORT);
     });
 }
